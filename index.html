@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+        .container {
+            text-align: center;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google</h1>
+        <input type="text" id="searchInput" placeholder="Search or enter URL...">
+        <button id="shortenButton">Shorten URL</button>
+        <button id="downloadButton">Download Site</button>
+        
+        <div id="result" class="hidden">
+            <p>Your shortened URL: <span id="shortenedUrl"></span></p>
+            <a id="shortenedLink" href="#" target="_blank">Go to shortened URL</a>
+        </div>
+
+        <button id="downloadLink" class="hidden">Download HTML</button>
+        
+    </div>
+
+    <script>
+        document.getElementById('shortenButton').addEventListener('click', function() {
+            const url = document.getElementById('searchInput').value;
+            if (url) {
+                const shortenedUrl = `https://short-ly987654.netlify.app/${encodeURIComponent(url)}.html`;
+                
+                document.getElementById('shortenedUrl').textContent = shortenedUrl;
+                document.getElementById('shortenedLink').href = shortenedUrl;
+                document.getElementById('result').classList.remove('hidden');
+            } else {
+                alert('Please enter a URL.');
+            }
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const url = document.getElementById('searchInput').value;
+            if (url) {
+                const a = document.createElement('a');
+                a.href = `https://short-ly987654.netlify.app/${encodeURIComponent(url)}.html`;
+                a.download = `${encodeURIComponent(url)}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                alert('Please enter a URL.');
+            }
+        });
+    </script>
+</body>
+</html>
